@@ -85,7 +85,7 @@ function Login() {
       </div>
 
       <div className="login-image">
-        <img src="src\assets\login.jpg" alt="gato"/>
+        <img src="login.jpg" alt="gato"/>
       </div>
 
     </div>

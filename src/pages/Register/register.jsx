@@ -94,7 +94,7 @@ function Register() {
       </div>
 
       <div className="login-image">
-        <img src="src\assets\register.jpg" alt="gato"/>
+        <img src="register.jpg" alt="gato"/>
       </div>
 
     </div>
