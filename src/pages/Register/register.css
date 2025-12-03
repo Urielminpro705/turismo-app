@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #9fd6cb;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #263230;
+    padding: 40px;
+    width: 700px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 16px rgba(0,0,0,0.4);
+
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-container input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+}
+
+.login-container button {
+    padding: 12px;
+    font-size: 16px;
+    background: #FF8000;
+    color: #151515;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-message {
+  width: 100%;
+  background: transparent;
+  padding: 0;
+}
+
+.login-message h5 {
+  margin: 0;
+  padding: 2px 0;
+  font-size: 13px;
+  text-align: center;
+  color: rgb(254, 94, 94);
+}
+
+
+.login-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-links {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.login-links a {
+    color: #4accb6;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+
+.login-image img {
+    height: 400px;
+    border-radius: 10px;
+    object-fit: cover;
+}
