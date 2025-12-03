@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "./review.css"; 
 
 const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
-
-// ID de Prueba
-const CURRENT_USER_ID = "691367242b40cb0ad38c897f"; 
 
 /**
  * @param {string} props.placeId - ID del lugar.
@@ -21,15 +18,23 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
     const [existingReview, setExistingReview] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const userId = localStorage.getItem("userId");
+
     // -----------------------------------------------------
     // BUSCAR RESEÑA EXISTENTE
     useEffect(() => {
+        if (!userId) {
+            setError("Debes iniciar sesión para escribir una reseña.");
+            setLoading(false);
+            return;
+        }
+
         const checkExistingReview = async () => {
             setLoading(true);
             setError(null);
             try {
                 // Buscar reseñas filtrando por placeId Y userId
-                const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}&userId=${CURRENT_USER_ID}`);
+                const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}&userId=${userId}`);
                 
                 if (!response.ok) {
                     throw new Error("Error al buscar la reseña existente.");
@@ -57,17 +62,22 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
         };
 
         checkExistingReview();
-    }, [placeId]);
+    }, [placeId, userId]);
 
     // -----------------------------------------------------
     // MANEJO DE ENVÍO (POST para CREAR / PATCH para ACTUALIZAR)
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!userId) {
+            setError("No hay usuario autenticado.");
+            return;
+        }
+
         setIsSubmitting(true);
         setError(null);
 
         const reviewData = {
-            userId: CURRENT_USER_ID,
+            userId: userId,
             placeId: placeId,
             comment: comment,
             rating: parseInt(rating),
@@ -104,6 +114,11 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
     const handleDelete = async () => {
         if (!existingReview || !window.confirm("¿Estás seguro de que quieres eliminar tu reseña?")) return;
 
+        if (!userId) {
+            setError("No hay usuario autenticado.");
+            return;
+        }
+
         setIsSubmitting(true);
         setError(null);
 
@@ -131,6 +146,19 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
         return <div className="new-place-form">Cargando tu reseña...</div>;
     }
     
+    if (error && error.includes("iniciar sesión")) {
+        return <div className="new-place-form">
+            <h4 style={{ color: 'red' }}>{error}</h4>
+            <button 
+                type="button"
+                onClick={onCancel}
+                className="icon-button cancel-review-button-form"
+            >
+                <span className="material-symbols-rounded">close</span>
+            </button>
+        </div>;
+    }
+
     const isEditing = !!existingReview;
 
     return (
