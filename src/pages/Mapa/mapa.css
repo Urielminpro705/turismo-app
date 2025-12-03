@@ -24,12 +24,10 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
-  /* cambiar overflow-y a auto para permitir scroll si es necesario */
-  overflow-y: auto;
+  overflow-y: auto; /* permite scroll si es necesario */
 }
 
 .page-container {
-  --page-static-width: 1200px;
   max-width: 1400px; 
   min-height: 100vh;
   margin: 0 auto;
@@ -70,7 +68,7 @@ body {
   display: flex;
   gap: 30px; 
   padding: 0;
-  height: calc(100vh - 80px); /* Ajusta según navbar */
+  height: calc(100vh - 80px); /* altura total menos navbar */
 }
 
 .left-section-map {
@@ -78,8 +76,7 @@ body {
   padding-right: 20px;
   display: flex;
   flex-direction: column;
-  /* asegurar que ocupe todo el alto */
-  height: 100%;
+  height: 100%; /* ocupa toda la altura disponible */
 }
 
 .right-section-map {
@@ -91,8 +88,8 @@ body {
 
 .right-section-map > .leaflet-container,
 .mapbox-container {
-  flex: 1; /* ocupa todo el espacio disponible */
-  min-height: 400px; /* evita colapsar si hay poco contenido */
+  flex: 1;
+  min-height: 400px; /* evita colapsar */
   border-radius: 15px;
 }
 
@@ -242,4 +239,10 @@ body {
   font-size: 30px; 
   cursor: pointer;
   filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Popups Leaflet --- */
+.leaflet-popup-content {
+  max-height: 300px; /* evita que se salga */
+  overflow-y: auto;   /* scroll interno si es necesario */
 }

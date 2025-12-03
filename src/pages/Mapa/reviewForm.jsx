@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./review.css"; 
 
 const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
@@ -19,6 +19,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const userId = localStorage.getItem("userId");
+    const userName = localStorage.getItem("userName"); // <-- nombre del usuario
 
     // -----------------------------------------------------
     // BUSCAR RESEÑA EXISTENTE
@@ -33,7 +34,6 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
             setLoading(true);
             setError(null);
             try {
-                // Buscar reseñas filtrando por placeId Y userId
                 const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}&userId=${userId}`);
                 
                 if (!response.ok) {
@@ -41,7 +41,6 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
                 }
                 
                 const result = await response.json();
-                
                 const foundReview = result.data ? result.data[0] : null; 
 
                 if (foundReview) {
@@ -78,6 +77,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
 
         const reviewData = {
             userId: userId,
+            userName: userName, // <-- incluimos nombre
             placeId: placeId,
             comment: comment,
             rating: parseInt(rating),
@@ -100,7 +100,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
                 throw new Error(`Error al ${method === 'POST' ? 'crear' : 'actualizar'} la reseña: ${errorText}`);
             }
 
-            onSuccess();
+            onSuccess(); // callback para actualizar lista o cerrar form
         } catch (err) {
             console.error("Submission error:", err);
             setError(err.message || "Ocurrió un error al guardar la reseña.");
@@ -110,7 +110,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
     };
 
     // -----------------------------------------------------
-    // 3. MANEJO DE ELIMINACIÓN (DELETE)
+    // MANEJO DE ELIMINACIÓN (DELETE)
     const handleDelete = async () => {
         if (!existingReview || !window.confirm("¿Estás seguro de que quieres eliminar tu reseña?")) return;
 
@@ -141,7 +141,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
     };
     
     // -----------------------------------------------------
-    // 4. Renderizado
+    // RENDERIZADO
     if (loading) {
         return <div className="new-place-form">Cargando tu reseña...</div>;
     }
@@ -189,7 +189,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
             
             <div className="button-group-existing" style={{ justifyContent: 'space-between', marginTop: '20px' }}>
                 
-                {/* Botón CANCELAR*/}
+                {/* Botón CANCELAR */}
                 <button 
                     type="button"
                     onClick={(e) => { e.stopPropagation(); onCancel(); }}
@@ -199,7 +199,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
                     <span className="material-symbols-rounded">close</span>
                 </button>
 
-                {/* Botón ELIMINAR*/}
+                {/* Botón ELIMINAR */}
                 {isEditing && (
                     <button 
                         type="button"
@@ -212,7 +212,7 @@ const ReviewForm = ({ placeId, placeName, onSuccess, onCancel }) => {
                     </button>
                 )}
                 
-                {/* Botón GUARDAR / CREAR  */}
+                {/* Botón GUARDAR / CREAR */}
                 <button 
                     type="submit"
                     disabled={isSubmitting}
