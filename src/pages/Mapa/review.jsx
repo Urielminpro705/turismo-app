@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./newPlace.css";
 import "./review.css";
+import ReviewForm from "./reviewForm";
 
 const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
 
@@ -17,29 +18,33 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
 
   const [isAddingReview, setIsAddingReview] = useState(false);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      setLoading(true);
-      setError(null);
-      try {
+  const fetchReviews = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
         const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}`);
-
         if (!response.ok) {
-          throw new Error(`Error al cargar reseñas: ${response.statusText}`);
+            throw new Error(`Error al cargar reseñas: ${response.statusText}`);
         }
-
         const result = await response.json();
         setReviews(result.data || []);
-      } catch (err) {
+    } catch (err) {
         console.error("Error fetching reviews:", err);
         setError("No se pudieron cargar las reseñas.");
-      } finally {
+    } finally {
         setLoading(false);
-      }
-    };
+    }
+}, [placeId, setReviews, setLoading, setError]);
 
+  useEffect(() => {
     fetchReviews();
-  }, [placeId]);
+  }, [fetchReviews]);
+  
+  // Recargar lista de reseñas después de agregar/editar/eliminar
+  const handleActionSuccess = () => {
+        setIsAddingReview(false);
+        fetchReviews(); 
+    };
 
   const handleAddReviewClick = (e) => {
     e.stopPropagation();
@@ -49,26 +54,13 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
 
   if (isAddingReview) {
     return (
-      <div className="new-place-form" onClick={(e) => e.stopPropagation()}>
-        <h4>Agregando Reseña a {placeName}</h4>
-        <p> (Aquí iría el formulario de la reseña) </p>
-        <div
-          className="button-group-existing"
-          style={{ justifyContent: "flex-end" }}
-        >
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsAddingReview(false);
-            }}
-            style={{ backgroundColor: "#A9A9A9", color: "white" }}
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-    );
+             <ReviewForm
+                 placeId={placeId}
+                 placeName={placeName}
+                 onSuccess={handleActionSuccess}
+                 onCancel={() => setIsAddingReview(false)} // Vuelve a la lista
+             />
+         );
   }
 
   return (

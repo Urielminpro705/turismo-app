@@ -108,3 +108,44 @@
     font-weight: bold;
     min-width: 100px;
 }
+
+.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px; 
+    padding: 0;
+    border-radius: 8px; 
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-review-button {
+    background-color: var(--color-verde-fuerte);
+}
+.delete-review-button .material-symbols-rounded {
+    color: var(--color-white) !important;
+}
+
+.save-review-button {
+    background-color: var(--color-primary); 
+}
+.save-review-button .material-symbols-rounded {
+    color: var(--color-white) !important;
+}
+
+.cancel-review-button-form {
+    background-color: var(--color-verde-light);
+}
+.cancel-review-button-form .material-symbols-rounded {
+    color: var(--color-white) !important;
+}
+
+.button-group-existing {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
