@@ -15,12 +15,14 @@ body {
     width: 700px;
     border-radius: 12px;
     box-shadow: 0px 4px 16px rgba(0,0,0,0.4);
-
     display: flex;
     gap: 30px;
     align-items: center;
 }
 
+.login-container h1 {
+    margin: 5;
+}
 
 .login-container form {
     display: flex;
@@ -53,12 +55,12 @@ body {
 
 .login-message h5 {
   margin: 0;
+  min-height: 20px;
   padding: 2px 0;
   font-size: 13px;
   text-align: center;
   color: rgb(254, 94, 94);
 }
-
 
 .login-content {
     flex: 1;
@@ -68,7 +70,7 @@ body {
 }
 
 .login-links {
-    margin-top: 10px;
+    margin: 10px;
     text-align: center;
 }
 
