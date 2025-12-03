@@ -6,6 +6,7 @@ import ReviewForm from "./reviewForm";
 const USERS_ENDPOINT = "http://3.138.174.15:3000/users";
 const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
 
+
 /**
  * Componente Popup para mostrar las reseñas de un lugar.
  * @param {string} props.placeId - ID del lugar para el que se buscan las reseñas.
@@ -21,7 +22,7 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
   const [isAddingReview, setIsAddingReview] = useState(false);
 
   // Función para obtener la lista de usuarios y mapearla por ID
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await fetch(USERS_ENDPOINT);
       if (!response.ok) {
@@ -41,39 +42,58 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
       console.error("Error fetching users:", err);
       return {}; 
     }
-  };
+  }, [setUsers]);
 
-  const fetchReviews = useCallback(async (usersMap) => {
+  const fetchReviews = useCallback(async () => {
+    //setLoading(true);
     setError(null);
     try {
-        const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}`);
+        const response = await fetch(REVIEWS_ENDPOINT);
         if (!response.ok) {
             throw new Error(`Error al cargar reseñas: ${response.statusText}`);
         }
         const result = await response.json();
-        setReviews(result.data || []);
+        const allReviews = result.data || [];
+
+        const filteredReviews = allReviews.filter(
+            review => review.placeId === placeId
+        );
+
+        setReviews(filteredReviews);
     } catch (err) {
         console.error("Error fetching reviews:", err);
         setError("No se pudieron cargar las reseñas.");
-    } finally {
-        setLoading(false);
-    }
-}, [placeId, setLoading, setError]);
+    } 
+}, [placeId, setError, setReviews]);
 
   useEffect(() => {
-    fetchReviews();
-    fetchUsers().then((usersMap) => {
-        fetchReviews(usersMap);
-    });
-  }, [fetchReviews]);
+    const initialLoad = async () => {
+        setLoading(true);
+        
+        try {
+            await fetchUsers(); 
+            
+            await fetchReviews(); 
+            
+        } catch {
+            // Manejo de errores no necesario
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    initialLoad();
+  }, [fetchReviews, fetchUsers]);
   
   // Recargar lista de reseñas después de agregar/editar/eliminar
   const handleActionSuccess = () => {
         setIsAddingReview(false);
-        fetchUsers().then((usersMap) => {
-        fetchReviews(usersMap);
-    });
+        setLoading(true);
+
+        Promise.all([fetchUsers(), fetchReviews()])
+            .finally(() => setLoading(false));
     };
+    
 
   const handleAddReviewClick = (e) => {
     e.stopPropagation();
