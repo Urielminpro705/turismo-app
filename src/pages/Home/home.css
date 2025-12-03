@@ -1,0 +1,242 @@
+/* --- Variables y Estilos Base --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-background: #f0f0f0;
+  --color-primary: #FF7F00; 
+  --color-text: #333;
+  --color-white: #ffffff;
+  --color-dark-text: #000;
+  --color-link: #888;
+  --color-verde-fuerte: #1A534A;
+  --color-verde-light: #02AF93;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-y: hidden;
+}
+
+.page-container {
+    --page-static-width: 1200px;
+  max-width: 1400px; 
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* --- Navbar (Barra de Navegación) --- */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.app-logo {
+    height: 30px; 
+    width: auto;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--color-dark-text);
+  font-weight: bold;
+  margin-left: 25px;
+  padding: 5px 0;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: var(--color-primary);
+}
+
+/* --- Contenido Principal (Layout de dos columnas) --- */
+
+.main-content {
+  display: flex;
+  gap: 40px;
+  padding: 0;
+  height: calc(100vh - 80px);
+  align-items: stretch;
+}
+
+.left-section {
+    flex: 0 0 25%; 
+  max-width: 25%;
+  min-width: 25%;
+}
+
+.right-section {
+  flex: 0 0 75%;
+  max-width: 75%;
+  overflow: hidden;
+}
+
+/* Título Principal */
+.main-title {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: var(--color-dark-text);
+}
+
+/* --- Tarjeta de Información (Info Card) --- */
+
+.info-card {
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.place-name {
+  color: var(--color-verde-fuerte);
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 800;
+  height: 35px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.description-section,
+.location-section {
+  margin-bottom: 0px;
+}
+
+.description-section .icon,
+.location-section .icon {
+  font-size: 20px;
+  margin-right: 8px;
+  color: var(--color-verde-fuerte);
+}
+
+.material-symbols-rounded,
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  vertical-align: middle;
+  color: var(--color-verde-light); 
+}
+
+.icon-title-group {
+  display: flex;
+  align-items: center; 
+  gap: 8px; 
+  margin-bottom: 5px; 
+}
+
+.icon-title-group .description-title,
+.icon-title-group .location-title {
+  margin: 0; 
+  line-height: 1;
+}
+
+.description-title,
+.location-title {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-verde-light);
+  margin-bottom: 5px;
+}
+
+.description-text {
+  font-size: 14px;
+  color: var(--color-text);
+    height: 145px;
+  overflow-y: auto;
+}
+
+.location-text {
+    height: 20px;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+/* Botón */
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.map-button {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;
+}
+
+.map-button:hover {
+  background-color: var(--color-primary); 
+}
+
+/* --- Carrusel de Imágenes --- */
+
+.carousel-container {
+  display: flex;
+  overflow: hidden; 
+  height: 620px; 
+  border-radius: 15px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    width: 150px;
+  min-width: 150px;
+  height: 100%; 
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+  margin-right: 15px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  transition: width 0.3s ease-in-out, border 0.3s;
+}
+
+.carousel-item.active-slide{
+    width: 350px; 
+  min-width: 350px;
+  
+  transition: width 0.3s ease-in-out, border 0.3s;
+    border: 2px solid var(--color-primary);
+    opacity: 1;
+}
+
+.navbar-links a.active {
+  color: var(--color-primary);
+}

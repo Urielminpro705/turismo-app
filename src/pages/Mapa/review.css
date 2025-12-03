@@ -1,0 +1,110 @@
+.review-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #fff;
+}
+
+/* Contenedor de la lista de reseñas con scroll */
+.reviews-list-container {
+    max-height: 250px; 
+    overflow-y: auto; 
+    padding: 0 5px;
+    margin: 10px 0;
+}
+
+/* Tarjeta individual de la reseña */
+.review-item {
+    padding: 10px 0;
+    margin-bottom: 0; 
+}
+
+/* Separador horizontal */
+.review-item + .review-item {
+    border-top: 1px solid #eee;
+}
+
+/* Diseño de la cabecera */
+.review-user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Icono de persona/perfil */
+.review-user-icon {
+    color: var(--color-verde-fuerte); 
+    font-size: 20px;
+}
+
+/* Contenedor de Fecha y Calificación */
+.review-metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    margin: 5px 0 8px 0;
+    padding-left: 28px; 
+    padding-right: 15px;
+}
+
+.review-date {
+    color: #888; 
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: bold;
+    color: var(--color-verde-light); 
+}
+
+/* Estilo del ícono de estrella */
+.review-rating .material-symbols-rounded {
+    font-size: 16px;
+    color: var(--color-verde-light);
+}
+
+.review-comment {
+    font-size: 13px;
+    line-height: 1.4;
+    padding-left: 28px; 
+    margin: 0;
+    color: var(--color-text);
+}
+
+
+/* Botón Cancelar */
+.cancel-review-button {
+    flex-grow: 0;
+    flex-basis: auto;
+    width: 40px; 
+    height: 40px; 
+    padding: 0 !important;
+    background-color: var(--color-verde-fuerte);
+}
+.cancel-review-button .material-symbols-rounded {
+    font-size: 22px;
+    color: var(--color-white) !important;
+}
+
+/* Botón Agregar Reseña  */
+.add-review-button {
+    flex-grow: 1; 
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: bold;
+    min-width: 100px;
+}
