@@ -45,58 +45,59 @@ function Register() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-content">
-        <h1>Sign Up</h1>
+    <div>
+      <div className="login-container">
+        <div className="login-content">
+          <h1>Sign Up</h1>
 
-        <form onSubmit={handleRegister}>
+          <form onSubmit={handleRegister}>
 
-          <input
-            type="text"
-            id="name"
-            placeholder="Nombre"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              setMessage("\u00A0");
-            }}/>
+            <input
+              type="text"
+              id="name"
+              placeholder="Nombre"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                setMessage("\u00A0");
+              }}/>
 
-          <input
-            type="text"
-            id="username"
-            placeholder="Nombre de Usuario"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setMessage("\u00A0");
-            }}/>
+            <input
+              type="text"
+              id="username"
+              placeholder="Nombre de Usuario"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setMessage("\u00A0");
+              }}/>
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setMessage("\u00A0");
-            }}/>
-          
-          <div className="login-message">
-            <h5>{message}</h5>
-          </div>
+            <input
+              type="password"
+              id="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setMessage("\u00A0");
+              }}/>
+            
+            <div className="login-message">
+              <h5>{message}</h5>
+            </div>
 
-          <button type="submit">Crear Cuenta</button>
-          
-          <div className="login-links">
-            <Link to="/login">¿Ya tienes una cuenta? Inicia sesión</Link>
-          </div>
-        </form>
+            <button type="submit">Crear Cuenta</button>
+            
+            <div className="login-links">
+              <Link to="/login">¿Ya tienes una cuenta? Inicia sesión</Link>
+            </div>
+          </form>
+        </div>
+
+        <div className="login-image">
+          <img src="register.jpg" alt="gato"/>
+        </div>
       </div>
-
-      <div className="login-image">
-        <img src="register.jpg" alt="gato"/>
-      </div>
-
     </div>
   );
 }

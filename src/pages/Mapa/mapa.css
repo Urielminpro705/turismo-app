@@ -24,11 +24,12 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
-  overflow-y: hidden;
+  /* cambiar overflow-y a auto para permitir scroll si es necesario */
+  overflow-y: auto;
 }
 
 .page-container {
-    --page-static-width: 1200px;
+  --page-static-width: 1200px;
   max-width: 1400px; 
   min-height: 100vh;
   margin: 0 auto;
@@ -36,8 +37,7 @@ body {
   padding-bottom: 20px;
 }
 
-/* --- Navbar (Barra de Navegación) --- */
-
+/* --- Navbar --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -47,8 +47,8 @@ body {
 }
 
 .app-logo {
-    height: 30px; 
-    width: auto;
+  height: 30px; 
+  width: auto;
 }
 
 .navbar-links a {
@@ -60,22 +60,17 @@ body {
   transition: color 0.2s;
 }
 
-.navbar-links a:hover {
-  color: var(--color-primary);
-}
-
+.navbar-links a:hover,
 .navbar-links a.active {
   color: var(--color-primary);
 }
 
-
 /* --- Contenido Principal --- */
-
 .main-content-map {
   display: flex;
   gap: 30px; 
-  padding: 0 40px; 
-  height: calc(100vh - 80px); 
+  padding: 0;
+  height: calc(100vh - 80px); /* Ajusta según navbar */
 }
 
 .left-section-map {
@@ -83,18 +78,25 @@ body {
   padding-right: 20px;
   display: flex;
   flex-direction: column;
-  height: 95%;
+  /* asegurar que ocupe todo el alto */
+  height: 100%;
 }
 
 .right-section-map {
   flex: 8;
-  height: 95%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.right-section-map > .leaflet-container {
+.right-section-map > .leaflet-container,
+.mapbox-container {
+  flex: 1; /* ocupa todo el espacio disponible */
+  min-height: 400px; /* evita colapsar si hay poco contenido */
   border-radius: 15px;
 }
 
+/* --- Título del mapa --- */
 .map-title {
   font-size: 40px;
   font-weight: 800;
@@ -163,7 +165,7 @@ body {
   border-radius: 10px;
 }
 
-.place-info-content{
+.place-info-content {
   padding-left: 10px;
 }
 
@@ -193,7 +195,6 @@ body {
   font-size: 14px;
   color: var(--color-text);
   margin: 5px 0 10px 0;
-  height: auto; 
   max-height: 45px;
   overflow: hidden;
   text-overflow: ellipsis; 
@@ -213,41 +214,32 @@ body {
   margin-top: 15px;
 }
 
-/* --- Contenedor del Mapa y Marcador --- */
-.mapbox-container {
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-}
-
-.marker-icon {
-    font-size: 30px; 
-    cursor: pointer;
-    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
-}
-
 .places-list .place-list-item:last-child .item-separator {
-    display: none;
+  display: none;
 }
 
-/* Contenedor de la scrollbar */
+/* --- Scrollbar personalizada --- */
 .places-list::-webkit-scrollbar {
   width: 8px;
 }
 
-/* Fondo de la scrollbar */
 .places-list::-webkit-scrollbar-track {
   background: #f1f1f1; 
   border-radius: 10px;
 }
 
-/* Mango (thumb) de la scrollbar */
 .places-list::-webkit-scrollbar-thumb {
   background: var(--color-primary); 
   border-radius: 10px;
 }
 
-/* Comportamiento al pasar el ratón */
 .places-list::-webkit-scrollbar-thumb:hover {
   background: #e06c00; 
+}
+
+/* --- Marcadores del mapa --- */
+.marker-icon {
+  font-size: 30px; 
+  cursor: pointer;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
 }

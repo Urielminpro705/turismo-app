@@ -27,7 +27,7 @@ function Login() {
         alert("Inicio de sesión exitoso");
         const json = await res.json();
         localStorage.setItem("userId", json.data.id);
-        navigate("/main");
+        navigate("/home");
         return;
       }
 
@@ -47,47 +47,49 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-content">
-        <h1>Log In</h1>
+    <div className="login-page">
+      <div className="login-container">
+        <div className="login-content">
+          <h1 className="log-title">Log In</h1>
 
-        <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin}>
 
-          <input
-            type="text"
-            id="username"
-            placeholder="Nombre de Usuario"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setMessage("\u00A0");
-            }}/>
+            <input
+              type="text"
+              id="username"
+              placeholder="Nombre de Usuario"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setMessage("\u00A0");
+              }}/>
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setMessage("\u00A0");
-            }}/>
-          
-          <div className="login-message">
-            <h5>{message}</h5>
-          </div>
+            <input
+              type="password"
+              id="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setMessage("\u00A0");
+              }}/>
+            
+            <div className="login-message">
+              <h5>{message}</h5>
+            </div>
 
-          <button type="submit">Iniciar Sesión</button> 
-          <div className="login-links">
-            <Link to="/register">¿No tienes cuenta? Crea una aquí</Link>
-          </div>
-        </form>
+            <button type="submit">Iniciar Sesión</button> 
+            <div className="login-links">
+              <Link to="/register">¿No tienes cuenta? Crea una aquí</Link>
+            </div>
+          </form>
+        </div>
+
+        <div className="login-image">
+          <img src="login.jpg" alt="gato"/>
+        </div>
+
       </div>
-
-      <div className="login-image">
-        <img src="login.jpg" alt="gato"/>
-      </div>
-
     </div>
   );
 }

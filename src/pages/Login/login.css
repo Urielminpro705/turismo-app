@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #9fd6cb;
@@ -7,10 +7,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+.login-page {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-container {
-    background: #263230;
+    background: #a6dcd3;
     padding: 40px;
     width: 700px;
     border-radius: 12px;
@@ -75,7 +85,7 @@ body {
 }
 
 .login-links a {
-    color: #4accb6;
+    color: #026c5b;
     text-decoration: none;
     font-size: 14px;
 }
