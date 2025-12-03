@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #9fd6cb;
@@ -7,20 +7,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+.login-page {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-container {
-    background: #263230;
+    background: #a6dcd3;
     padding: 40px;
     width: 700px;
     border-radius: 12px;
     box-shadow: 0px 4px 16px rgba(0,0,0,0.4);
-
     display: flex;
     gap: 30px;
     align-items: center;
 }
 
+.login-container h1 {
+    margin: 5;
+}
 
 .login-container form {
     display: flex;
@@ -53,12 +65,12 @@ body {
 
 .login-message h5 {
   margin: 0;
+  min-height: 20px;
   padding: 2px 0;
   font-size: 13px;
   text-align: center;
   color: rgb(254, 94, 94);
 }
-
 
 .login-content {
     flex: 1;
@@ -68,12 +80,12 @@ body {
 }
 
 .login-links {
-    margin-top: 10px;
+    margin: 10px;
     text-align: center;
 }
 
 .login-links a {
-    color: #4accb6;
+    color: #026c5b;
     text-decoration: none;
     font-size: 14px;
 }
