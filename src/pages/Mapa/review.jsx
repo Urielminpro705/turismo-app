@@ -3,6 +3,7 @@ import "./newPlace.css";
 import "./review.css";
 import ReviewForm from "./reviewForm";
 
+const USERS_ENDPOINT = "http://3.138.174.15:3000/users";
 const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
 
 /**
@@ -13,13 +14,36 @@ const REVIEWS_ENDPOINT = "http://3.138.174.15:3000/reviews";
  */
 const ReviewPopup = ({ placeId, placeName, onClose }) => {
   const [reviews, setReviews] = useState([]);
+  const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [isAddingReview, setIsAddingReview] = useState(false);
 
-  const fetchReviews = useCallback(async () => {
-    setLoading(true);
+  // Función para obtener la lista de usuarios y mapearla por ID
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(USERS_ENDPOINT);
+      if (!response.ok) {
+        throw new Error(`Error al cargar usuarios: ${response.statusText}`);
+      }
+      const result = await response.json();
+      
+      
+      const usersMap = (result.data || []).reduce((map, user) => {
+        map[user.id] = user;
+        return map;
+      }, {});
+      
+      setUsers(usersMap);
+      return usersMap; 
+    } catch (err) {
+      console.error("Error fetching users:", err);
+      return {}; 
+    }
+  };
+
+  const fetchReviews = useCallback(async (usersMap) => {
     setError(null);
     try {
         const response = await fetch(`${REVIEWS_ENDPOINT}?placeId=${placeId}`);
@@ -34,22 +58,32 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
     } finally {
         setLoading(false);
     }
-}, [placeId, setReviews, setLoading, setError]);
+}, [placeId, setLoading, setError]);
 
   useEffect(() => {
     fetchReviews();
+    fetchUsers().then((usersMap) => {
+        fetchReviews(usersMap);
+    });
   }, [fetchReviews]);
   
   // Recargar lista de reseñas después de agregar/editar/eliminar
   const handleActionSuccess = () => {
         setIsAddingReview(false);
-        fetchReviews(); 
+        fetchUsers().then((usersMap) => {
+        fetchReviews(usersMap);
+    });
     };
 
   const handleAddReviewClick = (e) => {
     e.stopPropagation();
 
     setIsAddingReview(true);
+  };
+
+  const getUserNameById = (userId) => {
+      const user = users[userId];
+      return user ? user.name : "Anónimo"; 
   };
 
   if (isAddingReview) {
@@ -91,7 +125,7 @@ const ReviewPopup = ({ placeId, placeName, onClose }) => {
                   <span className="material-symbols-rounded review-user-icon">
                     account_circle
                   </span>
-                  <strong>{review.user_name || "Anónimo"}</strong>
+                  <strong>{getUserNameById(review.userId)}</strong>
                 </div>
 
                 {/*  Metadata (Fecha y Calificación) */}
